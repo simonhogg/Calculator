@@ -45,6 +45,7 @@ class CalculatorBrain
         knownOps["sin"] = Op.UnaryOperation("sin", sin)
         knownOps["cos"] = Op.UnaryOperation("cos", cos)
         knownOps["π"] = Op.ConstantOperation("π", M_PI)
+        knownOps["±"] = Op.UnaryOperation("±") {$0 * -1}
     }
     
     private func evaluate(ops: [Op]) -> (result: Double?, remainingOps: [Op])
@@ -91,5 +92,18 @@ class CalculatorBrain
             opStack.append(operation)
         }
         return evaluate()
+    }
+    
+    func getHistoryString() -> String {
+        var returnString = ""
+        for op in opStack{
+            returnString += op.description
+            returnString += " "
+        }
+        return returnString
+    }
+    
+    func clearEverything() {
+        opStack = [Op]()
     }
 }
